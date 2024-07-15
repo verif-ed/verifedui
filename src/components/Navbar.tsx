@@ -11,8 +11,15 @@ import PlugConnect from "@psychedelic/plug-connect";
 import worldid from "../assets/worldId-removebg-preview.png";
 import { stringify } from "querystring";
 import logo from "../assets/logo-removebg-preview.png";
+import Login from "./Login";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
   const handleVerify = async (proof: ISuccessResult) => {
     console.log("handling proof", proof);
 
@@ -148,43 +155,48 @@ const Navbar = () => {
                   </form>
                   <h3 className="font-semibold p-4 text-xl">Connect Wallet!</h3>
                   <div className="flex  justify-evenly items-center p-8">
-                    <IDKitWidget
-                      app_id="app_06dfaf6fb5f0b8ac58c10bf412238ffb" // obtained from the Developer Portal
-                      action="wallet-connect" // obtained from the Developer Portal
-                      onSuccess={onSuccess} // callback when the modal is closed
-                      handleVerify={handleVerify} // callback when the proof is received
-                      verification_level={VerificationLevel.Device}
-                    >
-                      {({ open }) => (
-                        // This is the button that will open the IDKit modal
-                        <button
-                          onClick={open}
-                          className="w-max mr-3 bg-white border-[3px] border-black rounded-xl flex justify-between items-center gap-4 px-1"
-                        >
-                          <img
-                            src={worldid}
-                            alt=""
-                            className=""
-                            height={35}
-                            width={35}
-                          />{" "}
-                          <p className="text font-semibold text-black">
-                            World ID
-                          </p>
-                        </button>
-                      )}
-                    </IDKitWidget>
+                    <div className="flex justify-around items-center">
+                      <IDKitWidget
+                        app_id="app_06dfaf6fb5f0b8ac58c10bf412238ffb" // obtained from the Developer Portal
+                        action="wallet-connect" // obtained from the Developer Portal
+                        onSuccess={onSuccess} // callback when the modal is closed
+                        handleVerify={handleVerify} // callback when the proof is received
+                        verification_level={VerificationLevel.Device}
+                      >
+                        {({ open }) => (
+                          // This is the button that will open the IDKit modal
+                          <button
+                            onClick={open}
+                            className="w-max mr-3 bg-white border-[3px] border-black rounded-xl flex justify-between items-center gap-4 px-1"
+                          >
+                            <img
+                              src={worldid}
+                              alt=""
+                              className=""
+                              height={35}
+                              width={35}
+                            />{" "}
+                            <p className="text font-semibold text-black">
+                              World ID
+                            </p>
+                          </button>
+                        )}
+                      </IDKitWidget>
 
-                    {}
+                      {}
 
-                    <PlugConnect
-                      whitelist={["canister-id"]}
-                      onConnectCallback={handleConnect}
-                      title="Connect"
-                      debug={true}
+                      <PlugConnect
+                        whitelist={["canister-id"]}
+                        onConnectCallback={handleConnect}
+                        title="Connect"
+                        debug={true}
 
-                      // darkMode={true}
-                    />
+                        // darkMode={true}
+                      />
+                    </div>
+                  </div>
+                  <div className="w-[80%] flex justify-center items-center m-auto">
+                    <Login onLogin={handleLogin} />
                   </div>
                 </div>
               </dialog>
