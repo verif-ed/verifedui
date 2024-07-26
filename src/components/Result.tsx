@@ -53,7 +53,7 @@ const Result: React.FC<ResultComponentProps> = ({ result }) => {
           <p>{formatDuration(result.totalDuration)}</p>
         </div>
         <div>
-          <p className="font-semibold">Total Duration:</p>
+          <p className="font-semibold">Total Score:</p>
           <p>{result.score}</p>
         </div>
 
